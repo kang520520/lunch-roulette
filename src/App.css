@@ -1,19 +1,19 @@
-/* ▼▼▼ 新增這一段：強制網頁最外層滿版並置中 ▼▼▼ */
+/* ▼▼▼ 強制網頁最外層滿版並置中 (保留你的設定) ▼▼▼ */
 html, body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow-x: hidden; /* 防止水平捲軸 */
+  overflow-x: hidden;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
   display: flex;
-  justify-content: center; /* 讓內容在螢幕正中間 */
-  align-items: center;     /* 讓內容在螢幕正中間 */
-  background-color: var(--light); /* 確保背景色延伸 */
+  justify-content: center;
+  align-items: center;
+  background-color: var(--light);
 }
 /* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
@@ -28,24 +28,21 @@ html, body {
 .app-container {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Roboto, sans-serif;
   
-  /* 設定容器最大寬度，避免在電腦螢幕太寬 */
   width: 100%;
   max-width: 500px; 
   
-  /* 讓內部元素排列整齊 */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   
-  /* 間距與背景 */
+  /* ▼▼▼ 新增：為了讓右上角按鈕定位 ▼▼▼ */
+  position: relative; 
+  
   padding: 20px;
   box-sizing: border-box;
-  background-color: var(--light); /* 跟 #root 背景一致 */
-  border-radius: 20px; /* 稍微圓角讓它看起來像張卡片 (可選) */
-  
-  /* 如果想要有點卡片浮起來的感覺，可以加這行 (可選) */
-  /* box-shadow: 0 10px 25px rgba(0,0,0,0.05); */
+  background-color: var(--light);
+  border-radius: 20px;
 }
 
 /* 飲料模式主題 */
@@ -55,10 +52,34 @@ html, body {
   background-color: #f0f8ff;
 }
 
-/* 讓 #root 在飲料模式時背景也跟著變 */
 body:has(.mode-drink) #root {
   background-color: #f0f8ff;
 }
+
+/* ▼▼▼ 新增：右上角分享按鈕樣式 ▼▼▼ */
+.btn-share-top {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.2s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.btn-share-top:active {
+  transform: scale(0.9);
+  background: white;
+}
+/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
 h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-size: 1.8rem; text-align: center; width: 100%;}
 .subtitle { font-size: 0.9rem; color: #666; margin-bottom: 20px; text-align: center; width: 100%;}
@@ -97,7 +118,7 @@ h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-siz
   position: relative;
   width: 300px;
   height: 300px;
-  margin: 10px auto 30px auto; /* auto 確保左右置中 */
+  margin: 10px auto 30px auto; 
   aspect-ratio: 1/1; 
   max-width: 80vw;
   max-height: 80vw;
@@ -187,15 +208,21 @@ input[type="text"]:focus { border-color: var(--secondary); }
   width: 100%;
   margin-top: 10px; padding-bottom: 50px;
 }
+
+/* ▼▼▼ 修改：名單改為透明背景 ▼▼▼ */
 .tag { 
-  background: white; padding: 6px 14px; border-radius: 20px; 
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; gap: 8px; align-items: center;
+  background: rgba(255, 255, 255, 0.4); /* 透明白 */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 6px 14px; border-radius: 20px; 
+  display: flex; gap: 8px; align-items: center;
   font-size: 0.95rem; animation: fadeIn 0.3s ease;
   cursor: pointer;
+  backdrop-filter: blur(2px); /* 磨砂效果 */
 }
 .tag span.remove { 
-  color: #ccc; margin-left: 5px; font-weight: normal;
+  color: #999; margin-left: 5px; font-weight: normal;
 }
+/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
 /* 彈窗與提示 */
 .modal-overlay {
