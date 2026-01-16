@@ -1,3 +1,22 @@
+/* ▼▼▼ 新增這一段：強制網頁最外層滿版並置中 ▼▼▼ */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* 防止水平捲軸 */
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; /* 讓內容在螢幕正中間 */
+  align-items: center;     /* 讓內容在螢幕正中間 */
+  background-color: var(--light); /* 確保背景色延伸 */
+}
+/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
+
 :root {
   --primary: #ff6b6b;
   --secondary: #4ecdc4;
@@ -8,24 +27,25 @@
 
 .app-container {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Roboto, sans-serif;
-  background-color: var(--light);
-  color: var(--dark);
   
-  /* ▼▼▼ 終極置中設定 ▼▼▼ */
+  /* 設定容器最大寬度，避免在電腦螢幕太寬 */
+  width: 100%;
+  max-width: 500px; 
+  
+  /* 讓內部元素排列整齊 */
   display: flex;
-  flex-direction: column;   /* 由上到下排列 */
-  justify-content: center;  /* 垂直置中 (上下中間) */
-  align-items: center;      /* 水平置中 (左右中間) */
-  min-height: 100vh;        /* 高度至少跟螢幕一樣高 */
-  width: 100%;              /* 寬度佔滿 */
-  text-align: center;       /* 確保裡面的文字也置中 */
-  /* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
-
-  margin: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  /* 間距與背景 */
   padding: 20px;
   box-sizing: border-box;
-  transition: background-color 0.5s;
-  overscroll-behavior-y: none;
+  background-color: var(--light); /* 跟 #root 背景一致 */
+  border-radius: 20px; /* 稍微圓角讓它看起來像張卡片 (可選) */
+  
+  /* 如果想要有點卡片浮起來的感覺，可以加這行 (可選) */
+  /* box-shadow: 0 10px 25px rgba(0,0,0,0.05); */
 }
 
 /* 飲料模式主題 */
@@ -35,8 +55,13 @@
   background-color: #f0f8ff;
 }
 
-h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-size: 1.8rem; text-align: center;}
-.subtitle { font-size: 0.9rem; color: #666; margin-bottom: 20px; text-align: center;}
+/* 讓 #root 在飲料模式時背景也跟著變 */
+body:has(.mode-drink) #root {
+  background-color: #f0f8ff;
+}
+
+h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-size: 1.8rem; text-align: center; width: 100%;}
+.subtitle { font-size: 0.9rem; color: #666; margin-bottom: 20px; text-align: center; width: 100%;}
 
 /* 切換標籤 */
 .tabs {
@@ -72,7 +97,7 @@ h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-siz
   position: relative;
   width: 300px;
   height: 300px;
-  margin: 10px 0 30px 0;
+  margin: 10px auto 30px auto; /* auto 確保左右置中 */
   aspect-ratio: 1/1; 
   max-width: 80vw;
   max-height: 80vw;
@@ -120,16 +145,31 @@ canvas {
 
 /* 輸入與列表 */
 .controls { 
-  width: 100%; max-width: 500px; display: flex; gap: 8px; margin-bottom: 15px; 
+  width: 100%; 
+  display: flex; 
+  gap: 8px; 
+  margin-bottom: 15px; 
   flex-wrap: wrap; 
-  justify-content: center; /* 讓按鈕和輸入框在區域內置中 */
+  justify-content: center;
 }
 
-.input-wrapper { display: flex; flex: 1; min-width: 200px; gap: 8px;}
+.input-wrapper { 
+  display: flex; 
+  flex: 1; 
+  min-width: 200px; 
+  gap: 8px;
+  justify-content: center;
+}
 
 input[type="text"] { 
-  flex: 1; padding: 10px; border: 2px solid #dfe6e9; border-radius: 8px; font-size: 16px; 
-  outline: none; -webkit-appearance: none;
+  flex: 1; 
+  padding: 10px; 
+  border: 2px solid #dfe6e9; 
+  border-radius: 8px; 
+  font-size: 16px; 
+  outline: none; 
+  -webkit-appearance: none;
+  max-width: 100%;
 }
 input[type="text"]:focus { border-color: var(--secondary); }
 
@@ -143,8 +183,8 @@ input[type="text"]:focus { border-color: var(--secondary); }
 
 .option-list { 
   display: flex; flex-wrap: wrap; gap: 8px; 
-  justify-content: center; /* 讓下面的標籤置中 */
-  max-width: 500px; 
+  justify-content: center;
+  width: 100%;
   margin-top: 10px; padding-bottom: 50px;
 }
 .tag { 
@@ -169,8 +209,6 @@ input[type="text"]:focus { border-color: var(--secondary); }
   background: white; padding: 30px; border-radius: 20px; text-align: center; width: 85%; max-width: 320px;
   animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  
-  /* 確保彈窗內容也是置中的 */
   display: flex;
   flex-direction: column;
   align-items: center;
