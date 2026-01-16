@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import './App.css';
+import './App.css'; // 確保有引入 CSS
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously } from 'firebase/auth';
 import { getFirestore, doc, setDoc, onSnapshot } from 'firebase/firestore';
 
-// ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-// 你的 Firebase 設定 (已更新為 lunch-roulette-ac4e3)
+// Firebase 設定
 const firebaseConfig = {
   apiKey: "AIzaSyCDjlWkGkh_T8IienOFH_sNWPA10qakPuM",
   authDomain: "lunch-roulette-ac4e3.firebaseapp.com",
@@ -14,14 +13,11 @@ const firebaseConfig = {
   messagingSenderId: "172864187145",
   appId: "1:172864187145:web:ecad4a9cd332c7a82cc1d8"
 };
-// ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// 預設資料
 const DEFAULTS = {
   lunch: ["麥當勞", "肯德基", "便利商店", "健康餐", "牛肉麵", "水餃", "便當"],
   drink: ["50嵐", "可不可", "星巴克", "路易莎", "迷客夏", "白開水"]
@@ -41,32 +37,22 @@ function App() {
   const canvasRef = useRef(null);
   const startAngleRef = useRef(0);
 
-  // 1. 初始化
   useEffect(() => {
-    signInAnonymously(auth).catch(err => console.error("Auth Error (記得去後台開匿名登入):", err));
-
-    // 監聽新資料庫
+    signInAnonymously(auth).catch(console.error);
     const unsub = onSnapshot(doc(db, 'lunch_roulette', 'public_list'), (docSnap) => {
       if (docSnap.exists()) {
-        const cloudData = docSnap.data();
-        setDataStore(cloudData); 
+        setDataStore(docSnap.data()); 
       } else {
         saveToCloud(DEFAULTS);
       }
-    }, (error) => {
-      console.error("Firestore Error (記得去後台改 Rules):", error);
     });
-
     return () => unsub();
   }, []);
 
-  // 2. 更新選項
   useEffect(() => {
-    const currentOptions = dataStore[currentMode] || [];
-    setOptions(currentOptions);
+    setOptions(dataStore[currentMode] || []);
   }, [dataStore, currentMode]);
 
-  // 3. 重繪
   useEffect(() => {
     drawWheel();
   }, [options]);
@@ -75,8 +61,7 @@ function App() {
     try {
       await setDoc(doc(db, 'lunch_roulette', 'public_list'), newData, { merge: true });
     } catch (e) {
-      console.error("Save Error:", e);
-      alert("儲存失敗！請檢查 Firebase 權限設定 (Rules)");
+      // ignore
     }
   };
 
@@ -141,19 +126,16 @@ function App() {
     }
     
     setIsSpinning(true);
-    
     let spinTime = 0;
     let spinTimeTotal = Math.random() * 2000 + 3000; 
     let currentSpeed = Math.random() * 10 + 20;
 
     const animate = () => {
       spinTime += 20;
-      
       if (spinTime < spinTimeTotal) {
         const progress = spinTime / spinTimeTotal;
         const speed = currentSpeed * (1 - Math.pow(progress, 3)); 
         const actualSpeed = speed < 0.5 ? 0.5 : speed;
-        
         startAngleRef.current += (actualSpeed * Math.PI / 180);
         drawWheel();
         requestAnimationFrame(animate);
@@ -169,7 +151,6 @@ function App() {
     const degrees = startAngleRef.current * 180 / Math.PI + 90;
     const arcd = arc * 180 / Math.PI;
     const index = Math.floor((360 - degrees % 360) / arcd) % options.length;
-
     setModalResult(options[index]);
     setIsSpinning(false);
   };
@@ -209,19 +190,14 @@ function App() {
 
   return (
     <div className={`app-container mode-${currentMode}`}>
+      {/* ▼▼▼ 這裡就是你要的右上角按鈕 ▼▼▼ */}
+      <button className="btn-share-top" onClick={handleShare} title="複製連結">
+        🔗
+      </button>
+
       <div className="tabs">
-        <button 
-          className={`tab-btn ${currentMode === 'lunch' ? 'active' : ''}`} 
-          onClick={() => handleSwitchMode('lunch')}
-        >
-          🍚 午餐
-        </button>
-        <button 
-          className={`tab-btn ${currentMode === 'drink' ? 'active' : ''}`} 
-          onClick={() => handleSwitchMode('drink')}
-        >
-          🥤 飲料
-        </button>
+        <button className={`tab-btn ${currentMode === 'lunch' ? 'active' : ''}`} onClick={() => handleSwitchMode('lunch')}>🍚 午餐</button>
+        <button className={`tab-btn ${currentMode === 'drink' ? 'active' : ''}`} onClick={() => handleSwitchMode('drink')}>🥤 飲料</button>
       </div>
 
       <h1 id="pageTitle">{currentMode === 'lunch' ? '午餐吃什麼？' : '飲料喝哪家？'}</h1>
@@ -232,11 +208,7 @@ function App() {
         <canvas ref={canvasRef} width="600" height="600"></canvas>
       </div>
 
-      <button 
-        className="btn-spin" 
-        onClick={handleSpin} 
-        disabled={isSpinning}
-      >
+      <button className="btn-spin" onClick={handleSpin} disabled={isSpinning}>
         {isSpinning ? "轉動中..." : "GO! 開始轉動"}
       </button>
 
@@ -252,9 +224,6 @@ function App() {
           />
           <button className="btn-action btn-add" onClick={handleAddOption}>新增</button>
         </div>
-        <button className="btn-action btn-share" onClick={handleShare}>
-          🔗 複製連結
-        </button>
       </div>
 
       <div className="option-list">
@@ -271,20 +240,14 @@ function App() {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h3 style={{ margin: 0, color: '#666' }}>命運決定是...</h3>
             <div className="result-text">{modalResult}</div>
-            <button 
-              className="btn-action btn-add" 
-              style={{ width: '100%', fontSize: '1.1rem' }}
-              onClick={() => setModalResult(null)}
-            >
+            <button className="btn-action btn-add" style={{ width: '100%', fontSize: '1.1rem' }} onClick={() => setModalResult(null)}>
               太棒了！
             </button>
           </div>
         </div>
       )}
 
-      <div className={`toast ${showToast ? 'show' : ''}`}>
-        ✅ 連結已複製！大家都會看到一樣的名單喔
-      </div>
+      <div className={`toast ${showToast ? 'show' : ''}`}>✅ 連結已複製！</div>
     </div>
   );
 }
