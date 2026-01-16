@@ -1,4 +1,4 @@
-/* 強制網頁最外層滿版並置中 */
+/* ▼▼▼ 強制網頁最外層滿版並置中 (保留你的設定) ▼▼▼ */
 html, body {
   margin: 0;
   padding: 0;
@@ -15,6 +15,7 @@ html, body {
   align-items: center;
   background-color: var(--light);
 }
+/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
 :root {
   --primary: #ff6b6b;
@@ -26,18 +27,13 @@ html, body {
 
 .app-container {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Roboto, sans-serif;
-  
   width: 100%;
   max-width: 500px; 
-  
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
-  /* 為了讓右上角按鈕定位 */
   position: relative; 
-  
   padding: 20px;
   box-sizing: border-box;
   background-color: var(--light);
@@ -55,7 +51,7 @@ body:has(.mode-drink) #root {
   background-color: #f0f8ff;
 }
 
-/* ▼▼▼ 右上角分享按鈕樣式 ▼▼▼ */
+/* 右上角分享按鈕樣式 */
 .btn-share-top {
   position: absolute;
   top: 15px;
@@ -82,6 +78,7 @@ body:has(.mode-drink) #root {
 h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-size: 1.8rem; text-align: center; width: 100%;}
 .subtitle { font-size: 0.9rem; color: #666; margin-bottom: 20px; text-align: center; width: 100%;}
 
+/* 切換標籤 */
 .tabs {
   display: flex;
   background: var(--tab-bg);
@@ -110,6 +107,7 @@ h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-siz
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* 輪盤區 */
 .wheel-container {
   position: relative;
   width: 300px;
@@ -185,19 +183,23 @@ input[type="text"]:focus { border-color: var(--secondary); }
   margin-top: 10px; padding-bottom: 50px;
 }
 
-/* ▼▼▼ 透明背景名單 ▼▼▼ */
+/* ▼▼▼ 修改這裡：名單底色改成完全透明 (transparent) ▼▼▼ */
 .tag { 
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: transparent; /* 完全透明 */
+  border: 2px solid rgba(0, 0, 0, 0.15); /* 加深一點邊框，不然太透明會看不見 */
+  color: #555; /* 文字顏色深一點 */
+  
   padding: 6px 14px; border-radius: 20px; 
   display: flex; gap: 8px; align-items: center;
   font-size: 0.95rem; animation: fadeIn 0.3s ease;
   cursor: pointer;
-  backdrop-filter: blur(2px);
+  font-weight: bold;
 }
 .tag span.remove { 
-  color: #999; margin-left: 5px; font-weight: normal;
+  color: #ff6b6b; /* 刪除叉叉改成顯眼的紅色 */
+  font-weight: bold;
 }
+/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
