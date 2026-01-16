@@ -1,4 +1,4 @@
-/* ▼▼▼ 強制網頁最外層滿版並置中 (保留你的設定) ▼▼▼ */
+/* 強制網頁最外層滿版並置中 */
 html, body {
   margin: 0;
   padding: 0;
@@ -15,7 +15,6 @@ html, body {
   align-items: center;
   background-color: var(--light);
 }
-/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
 :root {
   --primary: #ff6b6b;
@@ -36,7 +35,7 @@ html, body {
   align-items: center;
   justify-content: center;
   
-  /* ▼▼▼ 新增：為了讓右上角按鈕定位 ▼▼▼ */
+  /* 為了讓右上角按鈕定位 */
   position: relative; 
   
   padding: 20px;
@@ -56,7 +55,7 @@ body:has(.mode-drink) #root {
   background-color: #f0f8ff;
 }
 
-/* ▼▼▼ 新增：右上角分享按鈕樣式 ▼▼▼ */
+/* ▼▼▼ 右上角分享按鈕樣式 ▼▼▼ */
 .btn-share-top {
   position: absolute;
   top: 15px;
@@ -79,12 +78,10 @@ body:has(.mode-drink) #root {
   transform: scale(0.9);
   background: white;
 }
-/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
 h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-size: 1.8rem; text-align: center; width: 100%;}
 .subtitle { font-size: 0.9rem; color: #666; margin-bottom: 20px; text-align: center; width: 100%;}
 
-/* 切換標籤 */
 .tabs {
   display: flex;
   background: var(--tab-bg);
@@ -113,7 +110,6 @@ h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-siz
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* 輪盤區 */
 .wheel-container {
   position: relative;
   width: 300px;
@@ -145,7 +141,6 @@ canvas {
   filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
 }
 
-/* 按鈕樣式 */
 .btn-spin {
   background-color: var(--primary);
   color: white;
@@ -164,33 +159,16 @@ canvas {
 .btn-spin:active { transform: translateY(4px); box-shadow: none; }
 .btn-spin:disabled { background-color: #b2bec3; box-shadow: none; cursor: not-allowed; transform: none;}
 
-/* 輸入與列表 */
 .controls { 
-  width: 100%; 
-  display: flex; 
-  gap: 8px; 
-  margin-bottom: 15px; 
-  flex-wrap: wrap; 
-  justify-content: center;
+  width: 100%; display: flex; gap: 8px; margin-bottom: 15px; 
+  flex-wrap: wrap; justify-content: center;
 }
 
-.input-wrapper { 
-  display: flex; 
-  flex: 1; 
-  min-width: 200px; 
-  gap: 8px;
-  justify-content: center;
-}
+.input-wrapper { display: flex; flex: 1; min-width: 200px; gap: 8px; justify-content: center;}
 
 input[type="text"] { 
-  flex: 1; 
-  padding: 10px; 
-  border: 2px solid #dfe6e9; 
-  border-radius: 8px; 
-  font-size: 16px; 
-  outline: none; 
-  -webkit-appearance: none;
-  max-width: 100%;
+  flex: 1; padding: 10px; border: 2px solid #dfe6e9; border-radius: 8px; font-size: 16px; 
+  outline: none; -webkit-appearance: none; max-width: 100%;
 }
 input[type="text"]:focus { border-color: var(--secondary); }
 
@@ -200,31 +178,27 @@ input[type="text"]:focus { border-color: var(--secondary); }
   -webkit-tap-highlight-color: transparent;
 }
 .btn-add { background-color: var(--secondary); }
-.btn-share { background-color: #2d3436; display: flex; align-items: center; gap: 5px;}
 
 .option-list { 
   display: flex; flex-wrap: wrap; gap: 8px; 
-  justify-content: center;
-  width: 100%;
+  justify-content: center; width: 100%;
   margin-top: 10px; padding-bottom: 50px;
 }
 
-/* ▼▼▼ 修改：名單改為透明背景 ▼▼▼ */
+/* ▼▼▼ 透明背景名單 ▼▼▼ */
 .tag { 
-  background: rgba(255, 255, 255, 0.4); /* 透明白 */
+  background: rgba(255, 255, 255, 0.4);
   border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 6px 14px; border-radius: 20px; 
   display: flex; gap: 8px; align-items: center;
   font-size: 0.95rem; animation: fadeIn 0.3s ease;
   cursor: pointer;
-  backdrop-filter: blur(2px); /* 磨砂效果 */
+  backdrop-filter: blur(2px);
 }
 .tag span.remove { 
   color: #999; margin-left: 5px; font-weight: normal;
 }
-/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
-/* 彈窗與提示 */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0,0,0,0.5); display: flex;
@@ -236,9 +210,7 @@ input[type="text"]:focus { border-color: var(--secondary); }
   background: white; padding: 30px; border-radius: 20px; text-align: center; width: 85%; max-width: 320px;
   animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex; flex-direction: column; align-items: center;
 }
 .result-text { font-size: 2.2rem; color: var(--primary); font-weight: bold; margin: 20px 0; word-break: break-word;}
 
