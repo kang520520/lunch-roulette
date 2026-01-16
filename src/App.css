@@ -1,0 +1,175 @@
+/* src/App.css */
+:root {
+  --primary: #ff6b6b;
+  --secondary: #4ecdc4;
+  --dark: #2d3436;
+  --light: #f7f9fc;
+  --tab-bg: #dfe6e9;
+}
+
+.app-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Roboto, sans-serif;
+  background-color: var(--light);
+  color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: background-color 0.5s;
+  overscroll-behavior-y: none;
+}
+
+/* 飲料模式主題 */
+.app-container.mode-drink {
+  --primary: #0984e3;
+  --secondary: #00cec9;
+  background-color: #f0f8ff;
+}
+
+h1 { color: var(--primary); margin-bottom: 5px; transition: color 0.3s; font-size: 1.8rem; text-align: center;}
+.subtitle { font-size: 0.9rem; color: #666; margin-bottom: 20px; text-align: center;}
+
+/* 切換標籤 */
+.tabs {
+  display: flex;
+  background: var(--tab-bg);
+  padding: 4px;
+  border-radius: 30px;
+  margin-bottom: 20px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.tab-btn {
+  padding: 8px 24px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #636e72;
+  background: transparent;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab-btn.active {
+  background: white;
+  color: var(--primary);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 輪盤區 */
+.wheel-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 10px 0 30px 0;
+  aspect-ratio: 1/1; 
+  max-width: 80vw;
+  max-height: 80vw;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.pointer {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 35px solid var(--primary);
+  z-index: 10;
+  transition: border-top-color 0.3s;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+}
+
+/* 按鈕樣式 */
+.btn-spin {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+  font-weight: bold;
+  margin-bottom: 20px;
+  transition: transform 0.1s, background-color 0.3s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-spin:active { transform: translateY(4px); box-shadow: none; }
+.btn-spin:disabled { background-color: #b2bec3; box-shadow: none; cursor: not-allowed; transform: none;}
+
+/* 輸入與列表 */
+.controls { 
+  width: 100%; max-width: 500px; display: flex; gap: 8px; margin-bottom: 15px; 
+  flex-wrap: wrap; justify-content: center;
+}
+
+.input-wrapper { display: flex; flex: 1; min-width: 200px; gap: 8px;}
+
+input[type="text"] { 
+  flex: 1; padding: 10px; border: 2px solid #dfe6e9; border-radius: 8px; font-size: 16px; 
+  outline: none; -webkit-appearance: none;
+}
+input[type="text"]:focus { border-color: var(--secondary); }
+
+.btn-action {
+  padding: 10px 16px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; color: white;
+  white-space: nowrap; font-size: 0.95rem;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-add { background-color: var(--secondary); }
+.btn-share { background-color: #2d3436; display: flex; align-items: center; gap: 5px;}
+
+.option-list { 
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 500px; 
+  margin-top: 10px; padding-bottom: 50px;
+}
+.tag { 
+  background: white; padding: 6px 14px; border-radius: 20px; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; gap: 8px; align-items: center;
+  font-size: 0.95rem; animation: fadeIn 0.3s ease;
+  cursor: pointer;
+}
+.tag span.remove { 
+  color: #ccc; margin-left: 5px; font-weight: normal;
+}
+
+/* 彈窗與提示 */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); display: flex;
+  justify-content: center; align-items: center; z-index: 1000;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.modal {
+  background: white; padding: 30px; border-radius: 20px; text-align: center; width: 85%; max-width: 320px;
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.result-text { font-size: 2.2rem; color: var(--primary); font-weight: bold; margin: 20px 0; word-break: break-word;}
+
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.85); color: white; padding: 12px 24px; border-radius: 30px;
+  font-size: 0.95rem; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+  z-index: 2000; white-space: nowrap; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.toast.show { opacity: 1; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
